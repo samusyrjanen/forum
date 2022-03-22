@@ -1,6 +1,9 @@
 # forum
 
-plan:  
+### purpose
+Website where users can discuss about different topics.
+
+### plan
 - User can log in and out and create a new account.  
 - In the fron page, user can see all threads and their topics and can open them.  
 - User can create a new thread.  
