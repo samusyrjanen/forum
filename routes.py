@@ -17,3 +17,9 @@ def thread(id):
 @app.route('/create_thread')
 def create_thread():
     return render_template('create_thread.html')
+
+@app.route('/send', methods=['POST'])
+def send():
+    content = request.form['content']
+    if threads.send(content):
+        return redirect('/')

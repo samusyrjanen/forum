@@ -12,3 +12,10 @@ def get_specific_thread(id):
         'users U where T.user_id=U.id and T.id=:id'
     result = db.session.execute(sql, {'id':id})
     return result.fetchone()
+
+def send(content):
+    sql = 'insert into threads (content, user_id) ' \
+        'values (:content, 1)'
+    db.session.execute(sql, {'content':content})
+    db.session.commit()
+    return True
