@@ -7,3 +7,10 @@ def thread_comments(id):
         'and C.thread_id=:id order by C.id'
     result = db.session.execute(sql, {'id':id})
     return result.fetchall()
+
+def send(content, thread_id):
+    sql = 'insert into comments (content, user_id, thread_id) ' \
+        'values (:content, 1, :thread_id)'
+    db.session.execute(sql, {'content':content, 'thread_id':thread_id})
+    db.session.commit()
+    return True
