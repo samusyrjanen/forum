@@ -1,5 +1,9 @@
 <hr>
 {% for thread in threads %}
-{{ thread.content }}
+<i>Topic: </i>{{ thread.content }}
+<br>
+<i>User: </i>{{ thread.username }} | <i>Date: </i>{{ thread.sent_at }}
+<br>
+<a href="/thread/{{ thread.id }}">Open</a>
 <hr>
 {% endfor %}
