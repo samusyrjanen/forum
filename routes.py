@@ -1,6 +1,7 @@
 from app import app
 from flask import render_template, request, redirect
 import threads
+import comments
 
 @app.route('/')
 def index():
@@ -10,4 +11,5 @@ def index():
 @app.route('/thread/<int:id>')
 def thread(id):
     thread = threads.get_specific_thread(id)
-    return render_template('thread.html', thread=thread)
+    #comment_list = comments.thread_comments(id)
+    return render_template('thread.html', thread=thread, comment_list='abc')
