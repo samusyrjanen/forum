@@ -11,5 +11,9 @@ def index():
 @app.route('/thread/<int:id>')
 def thread(id):
     thread = threads.get_specific_thread(id)
-    #comment_list = comments.thread_comments(id)
-    return render_template('thread.html', thread=thread, comment_list='abc')
+    comment_list = comments.thread_comments(id)
+    return render_template('thread.html', thread=thread, comment_list=comment_list)
+
+@app.route('/create_thread')
+def create_thread():
+    return render_template('create_thread.html')

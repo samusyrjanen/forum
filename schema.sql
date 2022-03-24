@@ -15,5 +15,6 @@ create table comments (
     id serial primary key,
     content text,
     user_id integer references users,
-    sent_at timestamp
+    sent_at timestamp,
+    thread_id integer references threads
 );
