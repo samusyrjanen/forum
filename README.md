@@ -4,10 +4,11 @@
 Website where users can discuss about different topics.
 
 ### plan
-- User can log in and out and create a new account.  
-- In the fron page, user can see all threads and their topics and can open them.  
-- User can create a new thread.  
-- User can write an answer to a thread or a comment.  
+- (done) User can log in and out and create a new account.  
+- (done) In the front page, user can see all threads and their topics and can open them.  
+- (done) User can create a new thread.  
+- (done) User can comment a thread.  
+- User can comment other comments.  
 - User can delete own threads and comments.  
 - User can search for a thread based on topic.  
 - User can like a thread or a comment.  
