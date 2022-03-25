@@ -9,8 +9,11 @@ def thread_comments(id):
     return result.fetchall()
 
 def send(content, thread_id):
+    user_id = users.user_id()
+    if user_id == 0:
+        return False
     sql = 'insert into comments (content, user_id, thread_id) ' \
-        'values (:content, 1, :thread_id)'
-    db.session.execute(sql, {'content':content, 'thread_id':thread_id})
+        'values (:content, :user_id, :thread_id)'
+    db.session.execute(sql, {'content':content, 'user_id':user_id, 'thread_id':thread_id})
     db.session.commit()
     return True

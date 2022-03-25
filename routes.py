@@ -1,12 +1,12 @@
 from app import app
 from flask import render_template, request, redirect
-import threads
-import comments
+import threads, comments, users
 
 @app.route('/')
 def index():
+    user_id = users.user_id()
     list = threads.get_thread_list()
-    return render_template('index.html', threads=list)
+    return render_template('index.html', user_id=user_id, threads=list)
 
 @app.route('/thread/<int:id>')
 def thread(id):
@@ -32,6 +32,32 @@ def comment(id):
 @app.route('/send_comment', methods=['POST'])
 def send_comment():
     thread_id = request.form['id']
-    content = request.form['commentcontent']##########
+    content = request.form['content']
     if comments.send(content, thread_id):
         return redirect('/thread/' + str(thread_id))
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':#what does this do?
+        return render_template('login.html')
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if users.login(username, password):
+            return redirect('/')
+
+@app.route('/logout')
+def logout():
+    users.logout()
+    return redirect('/')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'GET':
+        return render_template('register.html')
+    if request.method == 'POST':
+        username = request.form['username']
+        password1 = request.form['password1']
+        password2 = request.form['password2']
+        if users.register(username, password1):
+            return redirect('/')

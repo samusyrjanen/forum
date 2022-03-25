@@ -1,7 +1,7 @@
 <form action="/send_comment" method="POST">
 Comment thread <!--{{ thread.id }}-->:
 <br>
-<textarea name="commentcontent" rows="5" cols="80"></textarea>
+<textarea name="content" rows="5" cols="80"></textarea>
 <br>
 <input type="submit" value="Send">
 <input type="hidden" name="id" value="{{ thread.id }}">
