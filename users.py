@@ -4,7 +4,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 def user_id():
     return session.get('user_id', 0)
-    
+
 def login(username, password):
     sql = 'select id, password from users where username=:username'
     result = db.session.execute(sql, {'username':username})
@@ -32,6 +32,11 @@ def register(username, password):
         return False
     return login(username, password)
 
-
-
-#def username
+def username():
+    id = user_id()
+    if id == 0:
+        return None
+    sql = 'select username from users where users.id=:id'
+    result = db.session.execute(sql, {'id':id})
+    username = result.fetchone()
+    return username

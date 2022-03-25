@@ -1,7 +1,7 @@
 <hr>
 <i>Topic: </i>{{ thread.content }}
 <br>
-<i>User: </i>{{ thread.username }} | <i>Date: </i>{{ thread.sent_at }}
+<i>User: </i>{{ thread.username }} | <i>Date: </i>{{ thread.sent_at.strftime("%Y-%m-%d %H:%M") }}
 <hr>
 <p></p>
 <a href="/comment/{{ thread.id }}">Comment</a>
@@ -16,6 +16,6 @@
 {% for comment in comment_list %}
 {{ comment.content }}
 <br>
-<i>User: </i>{{ comment.username }} | <i>Date: </i>{{ comment.sent_at }}
+<i>User: </i>{{ comment.username }} | <i>Date: </i>{{ comment.sent_at.strftime("%Y-%m-%d %H:%M") }}
 <p></p>
 {% endfor %}

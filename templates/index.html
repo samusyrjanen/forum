@@ -1,12 +1,12 @@
-{% if not user_id %}
+{% if not username %}
 <p></p>
 To post, you need to be logged in. <br>
 <a href="/login">Login</a> | <a href="/register">Register</a>
 {% endif %}
 
-{% if user_id %}
+{% if username %}
 <p></p>
-Logged in as {{ user_id }} <br>
+Logged in as {{ username[0] }} <br>
 <a href="/logout">Logout</a>
 {% endif %}
 
@@ -17,7 +17,7 @@ Logged in as {{ user_id }} <br>
 {% for thread in threads %}
 <i>Topic: </i>{{ thread.content }}
 <br>
-<i>User: </i>{{ thread.username }} | <i>Date: </i>{{ thread.sent_at }}
+<i>User: </i>{{ thread.username }} | <i>Date: </i>{{ thread.sent_at.strftime("%Y-%m-%d %H:%M") }}
 <br>
 <a href="/thread/{{ thread.id }}">Open</a>
 <hr>
