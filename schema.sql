@@ -18,3 +18,10 @@ create table comments (
     sent_at timestamp,
     thread_id integer references threads
 );
+
+create table likes (
+    id serial primary key,
+    user_id integer references users,
+    thread_id integer references threads,
+    comment_id integer references comments
+);-------------------update server

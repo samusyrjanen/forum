@@ -6,6 +6,15 @@
 <i>User: </i>{{ thread.username }} | <i>Date: </i>{{ thread.sent_at.strftime("%Y-%m-%d %H:%M") }}
 <hr>
 <p></p>
+
+<form action="/send_thread_like" method="POST">
+<input type="submit" value="Like">
+<i>Likes: </i>
+{{ likes }}
+<input type="hidden" name="id" value="{{ thread.id }}">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+
 <a href="/comment/{{ thread.id }}">Comment</a>
 <p></p>
 <p>comments:</p>

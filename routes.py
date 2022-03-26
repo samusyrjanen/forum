@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template, request, redirect, session
-import threads, comments, users
+import threads, comments, users, likes
 
 @app.route('/')
 def index():
@@ -21,7 +21,8 @@ def result():
 def thread(id):
     thread = threads.get_specific_thread(id)
     comment_list = comments.thread_comments(id)
-    return render_template('thread.html', thread=thread, comment_list=comment_list)
+    like_list = likes.thread_likes(id)
+    return render_template('thread.html', thread=thread, comment_list=comment_list, likes=len(like_list))
 
 @app.route('/create_thread')
 def create_thread():
@@ -48,7 +49,7 @@ def send_comment():
     if session['csrf_token'] == request.form['csrf_token']:
         if comments.send(content, thread_id):
             return redirect('/thread/' + str(thread_id))
-    else:
+    else:###############################
         return render_template('/error.html', message="Couldn't send comment, make sure you're logged in")
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -80,3 +81,14 @@ def register():
             return redirect('/')
         else:
             return render_template('/error.html', message="Couldn't register, check username and password")
+
+@app.route('/send_thread_like', methods=['POST'])
+def send_thread_like():
+    thread_id = request.form['id']
+    if session['csrf_token'] == request.form['csrf_token']:
+        if likes.send(thread_id, None):
+            return redirect('/thread/' + str(thread_id))
+        else:
+            return render_template('/error.html', message="abc")
+    else:
+        return render_template('/error.html', message="def")
