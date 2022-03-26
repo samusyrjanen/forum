@@ -5,4 +5,5 @@ Comment thread <!--{{ thread.id }}-->:
 <br>
 <input type="submit" value="Send">
 <input type="hidden" name="id" value="{{ thread.id }}">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>

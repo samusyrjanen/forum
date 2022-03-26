@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, session
 import threads, comments, users
 
 @app.route('/')
@@ -21,8 +21,9 @@ def create_thread():
 @app.route('/send_thread', methods=['POST'])
 def send_thread():
     content = request.form['content']
-    if threads.send(content):
-        return redirect('/')
+    if session['csrf_token'] == request.form['csrf_token']:
+        if threads.send(content):
+            return redirect('/')
     else:
         return render_template('/error.html', message="Couldn't create thread, make sure you're logged in")
 
@@ -35,8 +36,9 @@ def comment(id):
 def send_comment():
     thread_id = request.form['id']
     content = request.form['content']
-    if comments.send(content, thread_id):
-        return redirect('/thread/' + str(thread_id))
+    if session['csrf_token'] == request.form['csrf_token']:
+        if comments.send(content, thread_id):
+            return redirect('/thread/' + str(thread_id))
     else:
         return render_template('/error.html', message="Couldn't send comment, make sure you're logged in")
 
