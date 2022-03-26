@@ -26,7 +26,7 @@ def thread(id):
     username = users.username()
     return render_template('thread.html', thread=thread,
         comment_list=comment_list, count_thread_likes=len(thread_like_list),
-        user_id=user_id, thread_likes=thread_like_list, username=username)#variables?
+        user_id=user_id, thread_likes=thread_like_list, username=username)
 
 @app.route('/create_thread')
 def create_thread():
@@ -98,5 +98,23 @@ def send_thread_unlike():
     thread_id = request.form['id']
     if session['csrf_token'] == request.form['csrf_token']:
         if likes.send_unlike(thread_id, None):
+            return redirect('/thread/' + str(thread_id))
+    return render_template('/error.html', message="Couldn't send unlike, make sure you're logged in")
+
+@app.route('/send_comment_like', methods=['POST'])
+def send_comment_like():
+    comment_id = request.form['comment_id']
+    thread_id = request.form['thread_id']
+    if session['csrf_token'] == request.form['csrf_token']:
+        if likes.send_like(None, comment_id):
+            return redirect('/thread/' + str(thread_id))
+    return render_template('/error.html', message="Couldn't send like, make sure you're logged in")
+
+@app.route('/send_comment_unlike', methods=['POST'])
+def send_comment_unlike():
+    comment_id = request.form['comment_id']
+    thread_id = request.form['thread_id']
+    if session['csrf_token'] == request.form['csrf_token']:
+        if likes.send_unlike(None, comment_id):
             return redirect('/thread/' + str(thread_id))
     return render_template('/error.html', message="Couldn't send unlike, make sure you're logged in")

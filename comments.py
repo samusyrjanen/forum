@@ -1,10 +1,10 @@
 from db import db
 import users
 
-def thread_comments(id):# how many likes per comment
+def thread_comments(id):#divide into smaller pieces?
     sql = 'select C.id, C.content, U.username, C.sent_at, count(L.comment_id) ' \
-        'from comments C, users U, likes L where C.user_id=U.id ' \
-        'and C.thread_id=:id and C.id=L.comment_id group by C.id, U.username order by C.id'
+        'from comments C left join users U on C.user_id=U.id left join likes L ' \
+        'on C.id=L.comment_id where C.thread_id=:id group by C.id, U.username order by C.id'
     result = db.session.execute(sql, {'id':id})
     return result.fetchall()
 

@@ -47,6 +47,18 @@ To post, you need to be logged in.
 <br>
 <i>User: </i>{{ comment.username }} | <i>Date: </i>{{ comment.sent_at.strftime("%Y-%m-%d %H:%M") }} 
 | 
+<form action="/send_comment_like" method="POST" style="display: inline;">
+<input type="submit" value="Like">
+<input type="hidden" name="comment_id" value="{{ comment.id }}">
+<input type="hidden" name="thread_id" value="{{ thread.id }}">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+<form action="/send_comment_unlike" method="POST" style="display: inline;">
+<input type="submit" value="Unlike">
+<input type="hidden" name="comment_id" value="{{ comment.id }}">
+<input type="hidden" name="thread_id" value="{{ thread.id }}">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
 <i>Likes: </i>{{ comment[4] }}
 <p></p>
 {% endfor %}
