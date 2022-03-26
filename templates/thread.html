@@ -7,13 +7,24 @@
 <hr>
 <p></p>
 
+{% if user_id not in likes %}
 <form action="/send_thread_like" method="POST">
 <input type="submit" value="Like">
 <i>Likes: </i>
-{{ likes }}
+{{ countlikes }}
+<br>
 <input type="hidden" name="id" value="{{ thread.id }}">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
+{% else %}
+<form action="/send_thread_unlike" method="POST">
+<input type="submit" value="Unlike">
+<i>Likes: </i>
+{{ countlikes }}
+<input type="hidden" name="id" value="{{ thread.id }}">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+{% endif %}
 
 <a href="/comment/{{ thread.id }}">Comment</a>
 <p></p>

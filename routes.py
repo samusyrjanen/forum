@@ -21,8 +21,11 @@ def result():
 def thread(id):
     thread = threads.get_specific_thread(id)
     comment_list = comments.thread_comments(id)
-    like_list = likes.thread_likes(id)
-    return render_template('thread.html', thread=thread, comment_list=comment_list, likes=len(like_list))
+    like_list = [i[0] for i in likes.thread_likes(id)]
+    user_id = users.user_id()
+    return render_template('thread.html', thread=thread,
+        comment_list=comment_list, countlikes=len(like_list),
+        user_id=user_id, likes=like_list)#variables?
 
 @app.route('/create_thread')
 def create_thread():
@@ -49,8 +52,7 @@ def send_comment():
     if session['csrf_token'] == request.form['csrf_token']:
         if comments.send(content, thread_id):
             return redirect('/thread/' + str(thread_id))
-    else:###############################
-        return render_template('/error.html', message="Couldn't send comment, make sure you're logged in")
+    return render_template('/error.html', message="Couldn't send comment, make sure you're logged in")
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -86,9 +88,14 @@ def register():
 def send_thread_like():
     thread_id = request.form['id']
     if session['csrf_token'] == request.form['csrf_token']:
-        if likes.send(thread_id, None):
+        if likes.send_like(thread_id, None):
             return redirect('/thread/' + str(thread_id))
-        else:
-            return render_template('/error.html', message="abc")
-    else:
-        return render_template('/error.html', message="def")
+    return render_template('/error.html', message="Couldn't send like, make sure you're logged in")
+
+@app.route('/send_thread_unlike', methods=['POST'])
+def send_thread_unlike():
+    thread_id = request.form['id']
+    if session['csrf_token'] == request.form['csrf_token']:
+        if likes.send_unlike(thread_id, None):
+            return redirect('/thread/' + str(thread_id))
+    return render_template('/error.html', message="Couldn't send unlike, make sure you're logged in")
