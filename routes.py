@@ -21,11 +21,12 @@ def result():
 def thread(id):
     thread = threads.get_specific_thread(id)
     comment_list = comments.thread_comments(id)
-    like_list = [i[0] for i in likes.thread_likes(id)]
+    thread_like_list = [i[0] for i in likes.thread_likes(id)]
     user_id = users.user_id()
+    username = users.username()
     return render_template('thread.html', thread=thread,
-        comment_list=comment_list, countlikes=len(like_list),
-        user_id=user_id, likes=like_list)#variables?
+        comment_list=comment_list, count_thread_likes=len(thread_like_list),
+        user_id=user_id, thread_likes=thread_like_list, username=username)#variables?
 
 @app.route('/create_thread')
 def create_thread():

@@ -1,4 +1,11 @@
-<a href='/'>Back</a>
+{% if username %}
+Logged in as {{ username[0] }}
+{% else %}
+To post, you need to be logged in.
+{% endif %}
+
+<p>
+<a href='/'>Back</a><br>
 <p></p>
 <hr>
 <i>Topic: </i>{{ thread.content }}
@@ -7,11 +14,11 @@
 <hr>
 <p></p>
 
-{% if user_id not in likes %}
+{% if user_id not in thread_likes %}
 <form action="/send_thread_like" method="POST">
 <input type="submit" value="Like">
 <i>Likes: </i>
-{{ countlikes }}
+{{ count_thread_likes }}
 <br>
 <input type="hidden" name="id" value="{{ thread.id }}">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
@@ -20,7 +27,7 @@
 <form action="/send_thread_unlike" method="POST">
 <input type="submit" value="Unlike">
 <i>Likes: </i>
-{{ countlikes }}
+{{ count_thread_likes }}
 <input type="hidden" name="id" value="{{ thread.id }}">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
@@ -38,6 +45,8 @@
 {% for comment in comment_list %}
 {{ comment.content }}
 <br>
-<i>User: </i>{{ comment.username }} | <i>Date: </i>{{ comment.sent_at.strftime("%Y-%m-%d %H:%M") }}
+<i>User: </i>{{ comment.username }} | <i>Date: </i>{{ comment.sent_at.strftime("%Y-%m-%d %H:%M") }} 
+| 
+<i>Likes: </i>{{ comment[4] }}
 <p></p>
 {% endfor %}
