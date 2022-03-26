@@ -13,6 +13,13 @@ Logged in as {{ username[0] }} <br>
 <p></p>
 <a href="/create_thread">Create new thread</a>
 <p></p>
+
+<form action="/result" method="GET">
+<input type="text" name="query">
+<input type="submit" value="search">
+</form>
+
+<br>
 <hr>
 {% for thread in threads %}
 <i>Topic: </i>{{ thread.content }}

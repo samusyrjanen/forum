@@ -8,6 +8,15 @@ def index():
     list = threads.get_thread_list()
     return render_template('index.html', username=username, threads=list)
 
+@app.route('/result')
+def result():
+    query = request.args['query']
+    if not query:
+        return redirect('/')
+    username = users.username()
+    list = threads.search_thread(query)
+    return render_template('index.html', username=username, threads=list)
+
 @app.route('/thread/<int:id>')
 def thread(id):
     thread = threads.get_specific_thread(id)
