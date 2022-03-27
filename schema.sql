@@ -6,6 +6,7 @@ create table users (
 
 create table threads (
     id serial primary key,
+    topic text,--------update server
     content text,
     user_id integer references users,
     sent_at timestamp
@@ -24,4 +25,4 @@ create table likes (
     user_id integer references users,
     thread_id integer references threads,
     comment_id integer references comments
-);-------------------update server
+);

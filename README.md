@@ -16,4 +16,4 @@ Website where users can discuss about different topics.
 - (done) User can like a thread or a comment.  
 - Admin can delete any thread or comment.  
 - Admin can create a closed thread with a whitelist of permitted users.  
-- Threads have a topic and an additional text field.  
+- (done) Threads have a topic and an additional text field.  

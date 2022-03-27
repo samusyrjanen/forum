@@ -34,9 +34,10 @@ def create_thread():
 
 @app.route('/send_thread', methods=['POST'])
 def send_thread():
+    topic = request.form['topic']
     content = request.form['content']
     if session['csrf_token'] == request.form['csrf_token']:
-        if threads.send(content):
+        if threads.send(topic, content):
             return redirect('/')
     return render_template('/error.html', message="Couldn't create thread, make sure you're logged in and text length is right")
 

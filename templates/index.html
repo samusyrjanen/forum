@@ -22,7 +22,7 @@ Logged in as {{ username[0] }} <br>
 <br>
 <hr>
 {% for thread in threads %}
-<i>Topic: </i>{{ thread.content }}
+<i>Topic: </i>{{ thread.topic }}
 <br>
 <i>User: </i>{{ thread.username }} | <i>Date: </i>{{ thread.sent_at.strftime("%Y-%m-%d %H:%M") }}
 <br>

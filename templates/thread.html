@@ -5,11 +5,13 @@ To post, you need to be logged in.
 {% endif %}
 
 <p>
-<button onclick="history.back()">Back</button><br>
-<p></p>
+<a href="/">Back</a>
+<br><p></p>
 <hr>
-<i>Topic: </i>{{ thread.content }}
-<br>
+<i>Topic: </i>{{ thread.topic }}
+<p>
+{{ thread.content }}
+<p>
 <i>User: </i>{{ thread.username }} | <i>Date: </i>{{ thread.sent_at.strftime("%Y-%m-%d %H:%M") }}
 <hr>
 <p></p>

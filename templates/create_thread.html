@@ -1,19 +1,28 @@
-<button onclick="history.back()">Back</button>
+<a href="/">Back</a>
 <p></p>
 <form action="/send_thread" method="POST">
 Topic:
 <br>
-<textarea name="content" rows="5" cols="80"></textarea>
+<textarea name="topic" rows="4" cols="100"></textarea>
+<p>
+Main text:
 <br>
+<textarea name="content" rows="8" cols="100"></textarea>
+<p>
 <input type="submit" value="create">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
-Length of text must be between 1 and 500 characters.
+Length of topic must be between 1 and 100 characters.<br>
+Length of text must be between 1 and 1000 characters.
 
 <script>
 function check(form) {
-    if (form.content.value.length > 500) {
+    if (form.content.value.length > 1000) {
         alert("Too long text");
+        return false;
+    }
+    if (form.topic.value.length > 100) {
+        alert("Too long topic");
         return false;
     }
     return true;
