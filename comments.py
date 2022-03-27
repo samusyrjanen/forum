@@ -12,6 +12,8 @@ def send(content, thread_id):
     user_id = users.user_id()
     if user_id == 0:
         return False
+    if len(content) < 1 or len(content) > 500:
+        return False
     sql = 'insert into comments (content, user_id, sent_at, thread_id) ' \
         'values (:content, :user_id, NOW(), :thread_id)'
     db.session.execute(sql, {'content':content, 'user_id':user_id, 'thread_id':thread_id})

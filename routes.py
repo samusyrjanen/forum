@@ -38,8 +38,7 @@ def send_thread():
     if session['csrf_token'] == request.form['csrf_token']:
         if threads.send(content):
             return redirect('/')
-    else:
-        return render_template('/error.html', message="Couldn't create thread, make sure you're logged in")
+    return render_template('/error.html', message="Couldn't create thread, make sure you're logged in and text length is right")
 
 @app.route('/comment/<int:id>')
 def comment(id):
@@ -53,7 +52,7 @@ def send_comment():
     if session['csrf_token'] == request.form['csrf_token']:
         if comments.send(content, thread_id):
             return redirect('/thread/' + str(thread_id))
-    return render_template('/error.html', message="Couldn't send comment, make sure you're logged in")
+    return render_template('/error.html', message="Couldn't send comment, make sure you're logged in and text length is right")
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

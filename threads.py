@@ -23,6 +23,8 @@ def send(content):
     user_id = users.user_id()
     if user_id == 0:
         return False
+    if len(content) < 1 or len(content) > 500:
+        return False
     sql = 'insert into threads (content, user_id, sent_at) ' \
         'values (:content, :user_id, NOW())'
     db.session.execute(sql, {'content':content, 'user_id':user_id})

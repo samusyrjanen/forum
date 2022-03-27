@@ -11,3 +11,14 @@
 <input type="hidden" name="id" value="{{ thread.id }}">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
+Length of text must be between 1 and 500 characters.
+
+<script>
+function check(form) {
+    if (form.content.value.length > 500) {
+        alert("Too long text");
+        return false;
+    }
+    return true;
+}
+</script>
