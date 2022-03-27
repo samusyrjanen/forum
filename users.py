@@ -24,6 +24,8 @@ def logout():
     del session['user_id']
 
 def register(username, password):
+    if len(username) < 3 or len(username) > 30 or len(password) < 3 or len(password) > 30:
+        return False
     hash_value = generate_password_hash(password)
     try:
         sql = 'insert into users (username, password) ' \
@@ -42,3 +44,8 @@ def username():
     result = db.session.execute(sql, {'id':id})
     username = result.fetchone()
     return username
+
+def taken_usernames():
+    sql = 'select username from users'
+    result = db.session.execute(sql)
+    return result.fetchall()

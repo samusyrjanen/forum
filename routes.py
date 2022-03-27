@@ -80,6 +80,10 @@ def register():
         username = request.form['username']
         password1 = request.form['password1']
         password2 = request.form['password2']
+        if username in [i[0] for i in users.taken_usernames()]:
+            return render_template('error.html', message='Username is already taken')
+        if password1 != password2:
+            return render_template('error.html', message='Passwords are different')
         if users.register(username, password1):
             return redirect('/')
         else:

@@ -1,8 +1,10 @@
-<a href='/thread/{{ thread.id }}'>Back</a>
+<button onclick="history.back()">Back</button>
 <p></p>
 <form action="/send_comment" method="POST">
-Comment thread <!--{{ thread.id }}-->:
+<i>Comment thread</i> "{{ thread.content }}"
 <br>
+<i>User: </i> {{ thread.username }}
+<p></p>
 <textarea name="content" rows="5" cols="80"></textarea>
 <br>
 <input type="submit" value="Send">
