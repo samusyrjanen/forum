@@ -6,7 +6,7 @@ create table users (
 
 create table threads (
     id serial primary key,
-    topic text,--------update server
+    topic text,
     content text,
     user_id integer references users,
     sent_at timestamp
