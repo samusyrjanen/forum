@@ -9,7 +9,7 @@ def get_thread_list():
 
 def search_thread(topic):
     sql = 'select T.id, T.topic, T.content, U.username, T.sent_at from threads T, ' \
-        'users U where T.user_id=U.id and T.topic like :topic order by T.id'
+        'users U where T.user_id=U.id and (T.topic like :topic or U.username like :topic) order by T.id'
     result = db.session.execute(sql, {'topic':'%'+topic+'%'})
     return result.fetchall()
 

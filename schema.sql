@@ -26,3 +26,12 @@ create table likes (
     thread_id integer references threads,
     comment_id integer references comments
 );
+
+--update to server
+create table messages (
+    id serial primary key,
+    sender_id integer references users,
+    receiver_id integer references users,
+    content text,
+    sent_at timestamp
+);

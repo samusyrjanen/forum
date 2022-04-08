@@ -1,0 +1,23 @@
+<a href="/">Front page</a>
+<p></p>
+<form action="/users/result" method="GET">
+    <input type="text" name="query">
+    <input type="submit" value="search">
+    </form>
+<p></p>
+
+{% if query %}
+<a href="/users">Show all</a>
+<p>Users which contain "{{ query }}":</p>
+{% else %}
+<p>Users:</p>
+{% endif %}
+
+{% for user in users %}
+<hr>
+{{ user.username }}
+{% if user_id %}
+| <a href="/message/{{ user.username }}">Send a message</a>
+{% endif %}
+{% endfor %}
+<hr>

@@ -1,0 +1,23 @@
+<a href="/messages">Messages</a>
+<p></p>
+<a href="/users">Search users</a>
+<p></p>
+
+<form action="/sent_messages/result" method="GET">
+    <input type="text" name="query">
+    <input type="submit" value="search">
+    </form>
+
+{% if query %}
+<a href="/sent_messages">Show all</a>
+<p>Sent messages which contain "{{ query }}":</p>
+{% else %}
+<p>Sent messages:</p>
+{% endif %}
+
+{% for message in messages %}
+<hr>
+{{ message.content }} <br>
+<i>To: </i> {{ message.username }} | <i>Date: </i>{{ message.sent_at.strftime("%Y-%m-%d %H:%M") }}
+{% endfor %}
+<hr>

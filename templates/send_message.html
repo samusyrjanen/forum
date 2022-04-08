@@ -1,0 +1,14 @@
+<a href="/">Front page</a><br>
+<a href="/messages">Messages</a>
+<p></p>
+<form action="/send_message" method="POST">
+<i>Send message to </i>{{ username }}
+<br>
+<textarea name="content" rows="8" cols="150"
+        required minlength="1" maxlength="1000"></textarea>
+<p>
+<input type="submit" value="send">
+<input type="hidden" name="username" value="{{ username }}">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+Length of message must be between 1 and 1000 characters.

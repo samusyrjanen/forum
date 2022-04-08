@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template, request, redirect, session
-import threads, comments, users, likes
+import threads, comments, users, likes, messages
 
 @app.route('/')
 def index():
@@ -15,7 +15,7 @@ def result():
         return redirect('/')
     username = users.username()
     list = threads.search_thread(query)
-    return render_template('index.html', username=username, threads=list)
+    return render_template('index.html', username=username, threads=list, query=query)
 
 @app.route('/thread/<int:id>')
 def thread(id):
@@ -39,7 +39,7 @@ def send_thread():
     if session['csrf_token'] == request.form['csrf_token']:
         if threads.send(topic, content):
             return redirect('/')
-    return render_template('/error.html', message="Couldn't create thread, make sure you're logged in and text length is right")
+    return render_template('/error.html', message="Couldn't create thread, make sure you're logged in")
 
 @app.route('/comment/<int:id>')
 def comment(id):
@@ -53,7 +53,7 @@ def send_comment():
     if session['csrf_token'] == request.form['csrf_token']:
         if comments.send(content, thread_id):
             return redirect('/thread/' + str(thread_id))
-    return render_template('/error.html', message="Couldn't send comment, make sure you're logged in and text length is right")
+    return render_template('/error.html', message="Couldn't send comment, make sure you're logged in")
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -122,3 +122,62 @@ def send_comment_unlike():
         if likes.send_unlike(None, comment_id):
             return redirect('/thread/' + str(thread_id))
     return render_template('/error.html', message="Couldn't send unlike, make sure you're logged in")
+
+@app.route('/message/<username>')
+def message(username):
+    return render_template('send_message.html', username=username)
+
+@app.route('/send_message', methods=['POST'])
+def send_message():
+    content = request.form['content']
+    username = request.form['username']
+    if session['csrf_token'] == request.form['csrf_token']:
+        if messages.send(content, username):
+            return redirect('/messages')
+    return render_template('/error.html', message="Couldn't send message, make sure you're logged in")
+
+@app.route('/users')
+def users_page():
+    user_list = users.get_all_users()
+    user_id = users.user_id()
+    if user_id == 0:
+        return render_template('users.html', users=user_list)
+    return render_template('users.html', users=user_list, user_id=user_id)
+
+@app.route('/users/result')
+def users_search():
+    query = request.args['query']
+    if not query:
+        return render_template('users.html', users=user_list)
+    user_list = users.search_users(query)
+    return render_template('users.html', users=user_list, query=query)
+
+@app.route('/messages')
+def messages_page():
+    user_id = users.user_id()
+    message_list = messages.received_messages(user_id)
+    return render_template('messages.html', messages=message_list)
+
+@app.route('/messages/result')
+def messages_search():
+    user_id = users.user_id()
+    query = request.args['query']
+    if not query:
+        return redirect('/messages')
+    message_list = messages.search_received_messages(user_id, query)
+    return render_template('messages.html', messages=message_list, query=query)
+
+@app.route('/sent_messages')
+def sent_messages():
+    user_id = users.user_id()
+    message_list = messages.sent_messages(user_id)
+    return render_template('sent_messages.html', messages=message_list)
+
+@app.route('/sent_messages/result')
+def sent_messages_search():
+    user_id = users.user_id()
+    query = request.args['query']
+    if not query:
+        return redirect('/sent_messages')
+    message_list = messages.search_sent_messages(user_id, query)
+    return render_template('sent_messages.html', messages=message_list, query=query)

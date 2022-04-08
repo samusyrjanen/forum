@@ -1,11 +1,11 @@
 {% if username %}
 Logged in as {{ username[0] }}
 {% else %}
-To post, comment or like, you need to be logged in.
+To post, comment, like or message, you need to be logged in.
 {% endif %}
 
 <p>
-<a href="/">Back</a>
+<a href="/">Front page</a>
 <br><p></p>
 <hr>
 <i>Topic: </i>{{ thread.topic }}
@@ -68,5 +68,9 @@ To post, comment or like, you need to be logged in.
 </form>
 {% endif %}
 <i>Likes: </i>{{ comment[4] }}
+{% if username %}
+|
+<a href="/message/{{ comment.username }}">Send a direct message</a>
+{% endif %}
 <p></p>
 {% endfor %}

@@ -49,3 +49,20 @@ def taken_usernames():
     sql = 'select username from users'
     result = db.session.execute(sql)
     return result.fetchall()
+
+def get_user_id(username):
+    sql = 'select id from users where username=:username'
+    result = db.session.execute(sql, {'username':username})
+    if result:
+        return result.fetchone()[0]
+    return 0
+
+def get_all_users():
+    sql = 'select id, username from users'
+    result = db.session.execute(sql)
+    return result.fetchall()
+
+def search_users(username):
+    sql = 'select id, username from users where username like :username order by username'
+    result = db.session.execute(sql, {'username':'%'+username+'%'})
+    return result.fetchall()
