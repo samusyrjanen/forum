@@ -17,6 +17,7 @@ Website where users can discuss about different topics.
 - Admin can delete any thread or comment.  
 - Admin can create a closed thread with a whitelist of permitted users.  
 - (done) Threads have a topic and an additional text field.  
+- Errors visible on the same page  
 
 ### testing
 

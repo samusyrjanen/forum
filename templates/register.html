@@ -1,27 +1,16 @@
 <a href="/">Back</a>
 <p></p>
 <form action="/register" method="POST">
-Username: <input type="text" name="username">
+Username: <input type="text" name="username"
+                required minlength="3" maxlength="30">
 <p>
-Password: <input type="password" name="password1">
+Password: <input type="password" name="password1"
+                required minlength="3" maxlength="30">
 <p>
-Repeat password: <input type="password" name="password2">
+Repeat password: <input type="password" name="password2"
+                        required minlength="3" maxlength="30">
 <p>
 <input type="submit" value="Register">
 </form>
 <p></p>
 The length of username and password must be between 3 and 30 characters.
-
-<script>
-function check(form) {
-    if (form.username.value.length > 30) {
-        alert("Username too long");
-        return false;
-    }
-    if (form.password.value.length > 30) {
-        alert("Password too long");
-        return false;
-    }
-    return true;
-}
-</script>

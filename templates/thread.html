@@ -1,7 +1,7 @@
 {% if username %}
 Logged in as {{ username[0] }}
 {% else %}
-To post, you need to be logged in.
+To post, comment or like, you need to be logged in.
 {% endif %}
 
 <p>
@@ -17,8 +17,10 @@ To post, you need to be logged in.
 <p></p>
 
 {% if user_id not in thread_likes %}
+{% if username %}
 <form action="/send_thread_like" method="POST">
 <input type="submit" value="Like">
+{% endif %}
 <i>Likes: </i>
 {{ count_thread_likes }}
 <br>
@@ -35,7 +37,9 @@ To post, you need to be logged in.
 </form>
 {% endif %}
 
+{% if username %}
 <a href="/comment/{{ thread.id }}">Comment</a>
+{% endif %}
 <p></p>
 <p>comments:</p>
 <p></p>
@@ -49,6 +53,7 @@ To post, you need to be logged in.
 <br>
 <i>User: </i>{{ comment.username }} | <i>Date: </i>{{ comment.sent_at.strftime("%Y-%m-%d %H:%M") }} 
 | 
+{% if username %}
 <form action="/send_comment_like" method="POST" style="display: inline;">
 <input type="submit" value="Like">
 <input type="hidden" name="comment_id" value="{{ comment.id }}">
@@ -61,6 +66,7 @@ To post, you need to be logged in.
 <input type="hidden" name="thread_id" value="{{ thread.id }}">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
+{% endif %}
 <i>Likes: </i>{{ comment[4] }}
 <p></p>
 {% endfor %}

@@ -5,20 +5,11 @@
 <br>
 <i>User: </i> {{ thread.username }}
 <p></p>
-<textarea name="content" rows="5" cols="80"></textarea>
+<textarea name="content" rows="5" cols="150"
+        required minlength="1" maxlength="1000"></textarea>
 <br>
 <input type="submit" value="Send">
 <input type="hidden" name="id" value="{{ thread.id }}">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
-Length of text must be between 1 and 500 characters.
-
-<script>
-function check(form) {
-    if (form.content.value.length > 500) {
-        alert("Too long text");
-        return false;
-    }
-    return true;
-}
-</script>
+Length of text must be between 1 and 1000 characters.

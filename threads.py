@@ -23,7 +23,7 @@ def send(topic, content):
     user_id = users.user_id()
     if user_id == 0:
         return False
-    if len(content) < 1 or len(content) > 1000 or len(topic) < 1 or len(topic) > 100:
+    if len(content) < 1 or len(content) > 2000 or len(topic) < 1 or len(topic) > 200:
         return False
     sql = 'insert into threads (topic, content, user_id, sent_at) ' \
         'values (:topic, :content, :user_id, NOW())'

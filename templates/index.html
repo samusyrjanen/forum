@@ -1,6 +1,6 @@
 {% if not username %}
 <p></p>
-To post, you need to be logged in. <br>
+To post, comment or like, you need to be logged in. <br>
 <a href="/login">Login</a> | <a href="/register">Register</a>
 {% endif %}
 
@@ -8,12 +8,13 @@ To post, you need to be logged in. <br>
 <p></p>
 Logged in as {{ username[0] }} <br>
 <a href="/logout">Logout</a>
-{% endif %}
 
 <p></p>
 <a href="/create_thread">Create new thread</a>
 <p></p>
+{% endif %}
 
+<p></p>
 <form action="/result" method="GET">
 <input type="text" name="query">
 <input type="submit" value="search">
