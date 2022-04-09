@@ -1,7 +1,7 @@
 # forum
 
 ### purpose
-Website where users can discuss about different topics.
+Website where users can discuss different topics.
 
 ### plan
 - (done) User can log in and out and create a new account.  

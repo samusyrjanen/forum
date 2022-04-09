@@ -6,7 +6,7 @@ To post, comment, like or message, you need to be logged in. <br>
 
 {% if username %}
 <p></p>
-Logged in as {{ username[0] }} <br>
+Logged in as {{ username }} <br>
 <a href="/logout">Logout</a> | <a href="/messages">Messages</a>
 {% endif %}
 
@@ -38,5 +38,12 @@ Logged in as {{ username[0] }} <br>
 <i>User: </i>{{ thread.username }} | <i>Date: </i>{{ thread.sent_at.strftime("%Y-%m-%d %H:%M") }}
 <br>
 <a href="/thread/{{ thread.id }}">Open</a>
+{% if username == thread.username %}
+<form action="/delete_thread" method="POST">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    <input type="hidden" name="thread_id" value="{{ thread.id }}">
+    <input type="submit" value="delete">
+</form>
+{% endif %}
 <hr>
 {% endfor %}

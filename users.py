@@ -43,7 +43,9 @@ def username():
     sql = 'select username from users where users.id=:id'
     result = db.session.execute(sql, {'id':id})
     username = result.fetchone()
-    return username
+    if not username:
+        return None
+    return username[0]
 
 def taken_usernames():
     sql = 'select username from users'

@@ -30,3 +30,16 @@ def send(topic, content):
     db.session.execute(sql, {'topic':topic, 'content':content, 'user_id':user_id})
     db.session.commit()
     return True
+
+def delete(id):
+    if not get_specific_thread(id):
+        return False
+    sql = 'delete from threads where id=:id'
+    db.session.execute(sql, {'id':id})
+    db.session.commit()
+    return True
+
+def user_id(thread_id):
+    sql = 'select U.id from threads T, users U where T.user_id=U.id and T.id=:thread_id'
+    result = db.session.execute(sql, {'thread_id':thread_id})
+    return result.fetchone()[0]

@@ -1,5 +1,5 @@
 {% if username %}
-Logged in as {{ username[0] }}
+Logged in as {{ username }}
 {% else %}
 To post, comment, like or message, you need to be logged in.
 {% endif %}
@@ -13,6 +13,13 @@ To post, comment, like or message, you need to be logged in.
 {{ thread.content }}
 <p>
 <i>User: </i>{{ thread.username }} | <i>Date: </i>{{ thread.sent_at.strftime("%Y-%m-%d %H:%M") }}
+{% if username == thread.username %}
+<form action="/delete_thread" method="POST">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    <input type="hidden" name="thread_id" value="{{ thread.id }}">
+    <input type="submit" value="delete">
+</form>
+{% endif %}
 <hr>
 <p></p>
 
@@ -68,9 +75,19 @@ To post, comment, like or message, you need to be logged in.
 </form>
 {% endif %}
 <i>Likes: </i>{{ comment[4] }}
+
+{% if username == comment.username %}
+<form action="/delete_comment" method="POST">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    <input type="hidden" name="comment_id" value="{{ comment.id }}">
+    <input type="hidden" name="thread_id" value="{{ thread.id }}">
+    <input type="submit" value="delete">
+</form>
+{% else %}
 {% if username %}
 |
 <a href="/message/{{ comment.username }}">Send a direct message</a>
+{% endif %}
 {% endif %}
 <p></p>
 {% endfor %}

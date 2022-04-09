@@ -55,7 +55,7 @@ def send_comment():
             return redirect('/thread/' + str(thread_id))
     return render_template('/error.html', message="Couldn't send comment, make sure you're logged in")
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])#################error to the same page
 def login():
     if request.method == 'GET':
         return render_template('login.html')
@@ -181,3 +181,28 @@ def sent_messages_search():
         return redirect('/sent_messages')
     message_list = messages.search_sent_messages(user_id, query)
     return render_template('sent_messages.html', messages=message_list, query=query)
+
+@app.route('/delete_thread', methods=['POST'])
+def delete_thread():
+    thread_id = request.form['thread_id']
+    thread_user_id = threads.user_id(thread_id)
+    user_id = users.user_id()
+    if thread_user_id != user_id:
+        return render_template('/error.html', message="Couldn't delete thread")
+    if request.form['csrf_token'] == session['csrf_token']:
+        if threads.delete(thread_id):
+            return redirect('/')
+    return render_template('/error.html', message="Couldn't delete thread")
+
+@app.route('/delete_comment', methods=['POST'])
+def delete_comment():
+    comment_id = request.form['comment_id']
+    comment = comments.get_specific_comment(comment_id)
+    user_id = users.user_id()
+    thread_id = request.form['thread_id']
+    if comment.user_id != user_id:
+        return render_template('/error.html', message="Couldn't delete thread")
+    if request.form['csrf_token'] == session['csrf_token']:
+        if comments.delete(comment_id):
+            return redirect('/thread/' + str(thread_id))
+    return render_template('/error.html', message="Couldn't delete thread")
