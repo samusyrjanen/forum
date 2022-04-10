@@ -10,6 +10,11 @@ Password: <input type="password" name="password1"
 Repeat password: <input type="password" name="password2"
                         required minlength="3" maxlength="30">
 <p>
+{% if message %}
+{{ message }}
+<p></p>
+{% endif %}
+
 <input type="submit" value="Register">
 </form>
 <p></p>

@@ -68,3 +68,12 @@ def search_users(username):
     sql = 'select id, username from users where username like :username order by username'
     result = db.session.execute(sql, {'username':'%'+username+'%'})
     return result.fetchall()
+
+def admin_value():
+    id = user_id()
+    sql = 'select admin from users where id=:id'
+    result = db.session.execute(sql, {'id':id})
+    result = result.fetchone()
+    if result:
+        return result[0]
+    return 0

@@ -6,7 +6,8 @@ import threads, comments, users, likes, messages
 def index():
     username = users.username()
     list = threads.get_thread_list()
-    return render_template('index.html', username=username, threads=list)
+    admin_value = users.admin_value()############
+    return render_template('index.html', username=username, threads=list, admin_value=admin_value)
 
 @app.route('/result')
 def result():
@@ -24,9 +25,11 @@ def thread(id):
     thread_like_list = [i[0] for i in likes.thread_likes(id)]
     user_id = users.user_id()
     username = users.username()
+    admin_value = users.admin_value()
     return render_template('thread.html', thread=thread,
         comment_list=comment_list, count_thread_likes=len(thread_like_list),
-        user_id=user_id, thread_likes=thread_like_list, username=username)
+        user_id=user_id, thread_likes=thread_like_list, username=username,
+        admin_value = admin_value)
 
 @app.route('/create_thread')
 def create_thread():
@@ -55,7 +58,7 @@ def send_comment():
             return redirect('/thread/' + str(thread_id))
     return render_template('/error.html', message="Couldn't send comment, make sure you're logged in")
 
-@app.route('/login', methods=['GET', 'POST'])#################error to the same page
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
         return render_template('login.html')
@@ -65,7 +68,7 @@ def login():
         if users.login(username, password):
             return redirect('/')
         else:
-            return render_template('/error.html', message="Couldn't login, check username and password")
+            return render_template('/login.html', message="Couldn't login, check username and password")
 
 @app.route('/logout')
 def logout():
@@ -81,9 +84,9 @@ def register():
         password1 = request.form['password1']
         password2 = request.form['password2']
         if username in [i[0] for i in users.taken_usernames()]:
-            return render_template('error.html', message='Username is already taken')
+            return render_template('register.html', message='That username is already taken')
         if password1 != password2:
-            return render_template('error.html', message='Passwords are different')
+            return render_template('register.html', message='Passwords were different')
         if users.register(username, password1):
             return redirect('/')
         else:
@@ -187,7 +190,8 @@ def delete_thread():
     thread_id = request.form['thread_id']
     thread_user_id = threads.user_id(thread_id)
     user_id = users.user_id()
-    if thread_user_id != user_id:
+    admin_value = users.admin_value()
+    if thread_user_id != user_id and admin_value != 1:
         return render_template('/error.html', message="Couldn't delete thread")
     if request.form['csrf_token'] == session['csrf_token']:
         if threads.delete(thread_id):
@@ -199,8 +203,9 @@ def delete_comment():
     comment_id = request.form['comment_id']
     comment = comments.get_specific_comment(comment_id)
     user_id = users.user_id()
+    admin_value = users.admin_value()#################
     thread_id = request.form['thread_id']
-    if comment.user_id != user_id:
+    if comment.user_id != user_id and admin_value != 1:######3
         return render_template('/error.html', message="Couldn't delete thread")
     if request.form['csrf_token'] == session['csrf_token']:
         if comments.delete(comment_id):

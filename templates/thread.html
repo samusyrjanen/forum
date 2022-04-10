@@ -13,7 +13,7 @@ To post, comment, like or message, you need to be logged in.
 {{ thread.content }}
 <p>
 <i>User: </i>{{ thread.username }} | <i>Date: </i>{{ thread.sent_at.strftime("%Y-%m-%d %H:%M") }}
-{% if username == thread.username %}
+{% if username == thread.username or admin_value == 1 %}
 <form action="/delete_thread" method="POST">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     <input type="hidden" name="thread_id" value="{{ thread.id }}">
@@ -76,7 +76,7 @@ To post, comment, like or message, you need to be logged in.
 {% endif %}
 <i>Likes: </i>{{ comment[4] }}
 
-{% if username == comment.username %}
+{% if username == comment.username or admin_value == 1 %}
 <form action="/delete_comment" method="POST">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     <input type="hidden" name="comment_id" value="{{ comment.id }}">
