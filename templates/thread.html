@@ -1,5 +1,8 @@
 {% if username %}
 Logged in as {{ username }}
+{% if admin_value == 1 %}
+(admin)
+{% endif %}
 {% else %}
 To post, comment, like or message, you need to be logged in.
 {% endif %}
