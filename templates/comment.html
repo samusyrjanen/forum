@@ -1,3 +1,6 @@
+{% extends "layout.html" %}
+{% block content %}
+
 <a href="/thread/{{ thread.id }}">Back</a>
 <p></p>
 <form action="/send_comment" method="POST">
@@ -13,3 +16,5 @@
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 Length of text must be between 1 and 1000 characters.
+
+{% endblock %}

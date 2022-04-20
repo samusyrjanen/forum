@@ -1,4 +1,6 @@
-<a href="/">Front page</a><br>
+{% extends "layout.html" %}
+{% block content %}
+
 <a href="/messages">Messages</a>
 <p></p>
 <form action="/send_message" method="POST">
@@ -12,3 +14,5 @@
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 Length of message must be between 1 and 1000 characters.
+
+{% endblock %}

@@ -1,16 +1,7 @@
-{% if username %}
-Logged in as {{ username }}
-{% if admin_value == 1 %}
-(admin)
-{% endif %}
-{% else %}
-To post, comment, like or message, you need to be logged in.
-{% endif %}
+{% extends "layout.html" %}
+{% block content %}
 
-<p>
-<a href="/">Front page</a>
-<br><p></p>
-<hr>
+<p></p>
 <i>Topic: </i>{{ thread.topic }}
 <p>
 {{ thread.content }}
@@ -94,3 +85,5 @@ To post, comment, like or message, you need to be logged in.
 {% endif %}
 <p></p>
 {% endfor %}
+
+{% endblock %}

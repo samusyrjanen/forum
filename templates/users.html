@@ -1,4 +1,6 @@
-<a href="/">Front page</a>
+{% extends "layout.html" %}
+{% block content %}
+
 <p></p>
 <form action="/users/result" method="GET">
     <input type="text" name="query">
@@ -21,3 +23,5 @@
 {% endif %}
 {% endfor %}
 <hr>
+
+{% endblock %}

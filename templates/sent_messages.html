@@ -1,3 +1,6 @@
+{% extends "layout.html" %}
+{% block content %}
+
 <a href="/messages">Messages</a>
 <p></p>
 <a href="/users">Search users</a>
@@ -21,3 +24,5 @@
 <i>To: </i> {{ message.username }} | <i>Date: </i>{{ message.sent_at.strftime("%Y-%m-%d %H:%M") }}
 {% endfor %}
 <hr>
+
+{% endblock %}

@@ -6,7 +6,7 @@ import threads, comments, users, likes, messages
 def index():
     username = users.username()
     list = threads.get_thread_list()
-    admin_value = users.admin_value()############
+    admin_value = users.admin_value()
     return render_template('index.html', username=username, threads=list, admin_value=admin_value)
 
 @app.route('/result')
@@ -16,7 +16,8 @@ def result():
         return redirect('/')
     username = users.username()
     list = threads.search_thread(query)
-    return render_template('index.html', username=username, threads=list, query=query)
+    admin_value = users.admin_value()
+    return render_template('index.html', username=username, threads=list, query=query, admin_value=admin_value)
 
 @app.route('/thread/<int:id>')
 def thread(id):
@@ -33,7 +34,9 @@ def thread(id):
 
 @app.route('/create_thread')
 def create_thread():
-    return render_template('create_thread.html')
+    username = users.username()
+    admin_value = users.admin_value()
+    return render_template('create_thread.html', username=username, admin_value=admin_value)
 
 @app.route('/send_thread', methods=['POST'])
 def send_thread():
@@ -47,7 +50,9 @@ def send_thread():
 @app.route('/comment/<int:id>')
 def comment(id):
     thread = threads.get_specific_thread(id)
-    return render_template('comment.html', thread=thread)
+    username = users.username()
+    admin_value = users.admin_value()
+    return render_template('comment.html', thread=thread, username=username, admin_value=admin_value)
 
 @app.route('/send_comment', methods=['POST'])
 def send_comment():
@@ -127,8 +132,9 @@ def send_comment_unlike():
     return render_template('/error.html', message="Couldn't send unlike, make sure you're logged in")
 
 @app.route('/message/<username>')
-def message(username):
-    return render_template('send_message.html', username=username)
+def message(username):############################################
+    admin_value = users.admin_value()
+    return render_template('send_message.html', username=username, admin_value=admin_value)
 
 @app.route('/send_message', methods=['POST'])
 def send_message():
@@ -143,47 +149,61 @@ def send_message():
 def users_page():
     user_list = users.get_all_users()
     user_id = users.user_id()
+    username = users.username()
+    admin_value = users.admin_value()
     if user_id == 0:
-        return render_template('users.html', users=user_list)
-    return render_template('users.html', users=user_list, user_id=user_id)
+        return render_template('users.html', users=user_list, username=username, admin_value=admin_value)
+    return render_template('users.html', users=user_list, user_id=user_id, username=username, admin_value=admin_value)
 
 @app.route('/users/result')
 def users_search():
     query = request.args['query']
+    user_id = users.user_id()
+    username = users.username()
+    admin_value = users.admin_value()
     if not query:
-        return render_template('users.html', users=user_list)
+        user_list = users.get_all_users()
+        return render_template('users.html', users=user_list, user_id=user_id, username=username, admin_value=admin_value)
     user_list = users.search_users(query)
-    return render_template('users.html', users=user_list, query=query)
+    return render_template('users.html', users=user_list, query=query, user_id=user_id, username=username, admin_value=admin_value)
 
 @app.route('/messages')
 def messages_page():
     user_id = users.user_id()
     message_list = messages.received_messages(user_id)
-    return render_template('messages.html', messages=message_list)
+    username = users.username()
+    admin_value = users.admin_value()
+    return render_template('messages.html', messages=message_list, username=username, admin_value=admin_value)
 
 @app.route('/messages/result')
 def messages_search():
     user_id = users.user_id()
     query = request.args['query']
+    username = users.username()
+    admin_value = users.admin_value()
     if not query:
         return redirect('/messages')
     message_list = messages.search_received_messages(user_id, query)
-    return render_template('messages.html', messages=message_list, query=query)
+    return render_template('messages.html', messages=message_list, query=query, username=username, admin_value=admin_value)
 
 @app.route('/sent_messages')
 def sent_messages():
     user_id = users.user_id()
     message_list = messages.sent_messages(user_id)
-    return render_template('sent_messages.html', messages=message_list)
+    username = users.username()
+    admin_value = users.admin_value()
+    return render_template('sent_messages.html', messages=message_list, username=username, admin_value=admin_value)
 
 @app.route('/sent_messages/result')
 def sent_messages_search():
     user_id = users.user_id()
     query = request.args['query']
+    username = users.username()
+    admin_value = users.admin_value()
     if not query:
         return redirect('/sent_messages')
     message_list = messages.search_sent_messages(user_id, query)
-    return render_template('sent_messages.html', messages=message_list, query=query)
+    return render_template('sent_messages.html', messages=message_list, query=query, username=username, admin_value=admin_value)
 
 @app.route('/delete_thread', methods=['POST'])
 def delete_thread():
@@ -203,9 +223,9 @@ def delete_comment():
     comment_id = request.form['comment_id']
     comment = comments.get_specific_comment(comment_id)
     user_id = users.user_id()
-    admin_value = users.admin_value()#################
+    admin_value = users.admin_value()
     thread_id = request.form['thread_id']
-    if comment.user_id != user_id and admin_value != 1:######3
+    if comment.user_id != user_id and admin_value != 1:
         return render_template('/error.html', message="Couldn't delete thread")
     if request.form['csrf_token'] == session['csrf_token']:
         if comments.delete(comment_id):

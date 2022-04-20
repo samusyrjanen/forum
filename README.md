@@ -18,6 +18,7 @@ Website where users can discuss different topics.
 - (done) Threads have a topic and an additional text field.  
 - (done) Errors visible on the same page.  
 - (done) Users can send private messages to each other.  
+- Users can sort threads and comments by date or likes.  
 
 ### testing
 

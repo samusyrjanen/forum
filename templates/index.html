@@ -1,20 +1,5 @@
-{% if not username %}
-<p></p>
-To post, comment, like or message, you need to be logged in. <br>
-<a href="/login">Login</a> | <a href="/register">Register</a>
-{% endif %}
-
-{% if username %}
-<p></p>
-Logged in as {{ username }}
-{% if admin_value == 1 %}
-(admin)
-{% endif %} <br>
-<a href="/logout">Logout</a> | <a href="/messages">Messages</a>
-{% endif %}
-
-<p></p>
-<a href="/users">Search users</a>
+{% extends "layout.html" %}
+{% block content %}
 
 {% if username %}
 <p></p>
@@ -50,3 +35,5 @@ Logged in as {{ username }}
 {% endif %}
 <hr>
 {% endfor %}
+
+{% endblock %}
