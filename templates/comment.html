@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 {% extends "layout.html" %}
 {% block content %}
 
@@ -9,7 +10,7 @@
                 <br>
                 <i>User: </i> {{ thread.username }}
                 <p></p>
-                <textarea name="content" rows="5" cols="150"
+                <textarea name="content" rows="5" cols="100"
                         required minlength="1" maxlength="1000"></textarea>
                 <br>
                 <input type="submit" value="Send">

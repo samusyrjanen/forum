@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 {% extends "layout.html" %}
 {% block content %}
 
@@ -5,7 +6,7 @@
         <form action="/send_message" method="POST">
         <i>Send message to </i>{{ username }}
         <br>
-        <textarea name="content" rows="8" cols="150"
+        <textarea name="content" rows="8" cols="100"
                 required minlength="1" maxlength="1000"></textarea>
         <p>
         <input type="submit" value="send">
