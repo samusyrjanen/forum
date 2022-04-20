@@ -3,6 +3,9 @@
 ### purpose
 Website where users can discuss different topics.
 
+### description
+Users can create accounts and post threads into the forum. Each thread has a topic and main text. In thread page users can like and comment the thread. Users can also send private messages to each other and search usernames.
+
 ### plan
 - (done) User can log in and out and create a new account.  
 - (done) All accounts have different usernames and cannot leave usernames or passwords blank.  
@@ -21,5 +24,5 @@ Website where users can discuss different topics.
 - Users can sort threads and comments by date or likes.  
 
 ### testing
-
-[heroku](https://tsoha-forum-visitors.herokuapp.com/)
+Testing can be done in heroku:  
+[https://tsoha-forum-visitors.herokuapp.com](https://tsoha-forum-visitors.herokuapp.com/)
