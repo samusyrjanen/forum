@@ -1,20 +1,22 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<a href="/thread/{{ thread.id }}">Back</a>
-<p></p>
-<form action="/send_comment" method="POST">
-<i>Comment thread </i> "{{ thread.topic }}"
-<br>
-<i>User: </i> {{ thread.username }}
-<p></p>
-<textarea name="content" rows="5" cols="150"
-        required minlength="1" maxlength="1000"></textarea>
-<br>
-<input type="submit" value="Send">
-<input type="hidden" name="id" value="{{ thread.id }}">
-<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-</form>
-Length of text must be between 1 and 1000 characters.
+<div class="container">
+        <a href="/thread/{{ thread.id }}">Back</a>
+        <p></p>
+        <form action="/send_comment" method="POST">
+                <i>Comment thread </i> "{{ thread.topic }}"
+                <br>
+                <i>User: </i> {{ thread.username }}
+                <p></p>
+                <textarea name="content" rows="5" cols="150"
+                        required minlength="1" maxlength="1000"></textarea>
+                <br>
+                <input type="submit" value="Send">
+                <input type="hidden" name="id" value="{{ thread.id }}">
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        </form>
+        Length of text must be between 1 and 1000 characters.
+</div>
 
 {% endblock %}

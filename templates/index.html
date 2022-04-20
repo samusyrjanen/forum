@@ -1,39 +1,41 @@
 {% extends "layout.html" %}
 {% block content %}
 
-{% if username %}
-<p></p>
-<a href="/create_thread">Create new thread</a>
-<p></p>
-{% endif %}
+<div class="container">
+    {% if username %}
+    <p></p>
+    <a href="/create_thread">Create new thread</a>
+    <p></p>
+    {% endif %}
 
-<p></p>
-<form action="/result" method="GET">
-<input type="text" name="query">
-<input type="submit" value="search">
-</form>
+    <p></p>
+    <form action="/result" method="GET">
+    <input type="text" name="query">
+    <input type="submit" value="search">
+    </form>
 
-{% if query %}
-<a href="/">Show all</a>
-<p>Threads which contain "{{ query }}":</p>
-{% endif %}
+    {% if query %}
+    <a href="/">Show all</a>
+    <p>Threads which contain "{{ query }}":</p>
+    {% endif %}
 
-<br>
-<hr>
-{% for thread in threads %}
-<i>Topic: </i>{{ thread.topic }}
-<br>
-<i>User: </i>{{ thread.username }} | <i>Date: </i>{{ thread.sent_at.strftime("%Y-%m-%d %H:%M") }}
-<br>
-<a href="/thread/{{ thread.id }}">Open</a>
-{% if username == thread.username or admin_value == 1 %}
-<form action="/delete_thread" method="POST">
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-    <input type="hidden" name="thread_id" value="{{ thread.id }}">
-    <input type="submit" value="delete">
-</form>
-{% endif %}
-<hr>
-{% endfor %}
+    <br>
+    <hr>
+    {% for thread in threads %}
+    <i>Topic: </i>{{ thread.topic }}
+    <br>
+    <i>User: </i>{{ thread.username }} | <i>Date: </i>{{ thread.sent_at.strftime("%Y-%m-%d %H:%M") }}
+    <br>
+    <a href="/thread/{{ thread.id }}">Open</a>
+    {% if username == thread.username or admin_value == 1 %}
+    <form action="/delete_thread" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        <input type="hidden" name="thread_id" value="{{ thread.id }}">
+        <input type="submit" value="delete">
+    </form>
+    {% endif %}
+    <hr>
+    {% endfor %}
+</div>
 
 {% endblock %}

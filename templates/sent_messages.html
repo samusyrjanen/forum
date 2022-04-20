@@ -1,26 +1,30 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<a href="/messages">Received messages</a>
-<p></p>
+<div class="container">
 
-<form action="/sent_messages/result" method="GET">
-    <input type="text" name="query">
-    <input type="submit" value="search">
-    </form>
+    <a href="/messages">Received messages</a>
+    <p></p>
 
-{% if query %}
-<a href="/sent_messages">Show all</a>
-<p>Sent messages which contain "{{ query }}":</p>
-{% else %}
-<p>Sent messages:</p>
-{% endif %}
+    <form action="/sent_messages/result" method="GET">
+        <input type="text" name="query">
+        <input type="submit" value="search">
+        </form>
 
-{% for message in messages %}
-<hr>
-{{ message.content }} <br>
-<i>To: </i> {{ message.username }} | <i>Date: </i>{{ message.sent_at.strftime("%Y-%m-%d %H:%M") }}
-{% endfor %}
-<hr>
+    {% if query %}
+    <a href="/sent_messages">Show all</a>
+    <p>Sent messages which contain "{{ query }}":</p>
+    {% else %}
+    <p>Sent messages:</p>
+    {% endif %}
+
+    {% for message in messages %}
+    <hr>
+    {{ message.content }} <br>
+    <i>To: </i> {{ message.username }} | <i>Date: </i>{{ message.sent_at.strftime("%Y-%m-%d %H:%M") }}
+    {% endfor %}
+    <hr>
+
+</div>
 
 {% endblock %}

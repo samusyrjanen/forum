@@ -1,22 +1,24 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<p></p>
-<form action="/send_thread" method="POST">
-Topic:
-<br>
-<textarea name="topic" rows="3" cols="150"
-        required minlength="1" maxlength="200"></textarea>
-<p>
-Main text:
-<br>
-<textarea name="content" rows="10" cols="150"
-        required minlength="1" maxlength="2000"></textarea>
-<p>
-<input type="submit" value="create">
-<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-</form>
-Length of topic must be between 1 and 200 characters.<br>
-Length of main text must be between 1 and 2000 characters.
+<div class="container">
+        <p></p>
+        <form action="/send_thread" method="POST">
+        Topic:
+        <br>
+        <textarea name="topic" rows="3" cols="150"
+                required minlength="1" maxlength="200"></textarea>
+        <p>
+        Main text:
+        <br>
+        <textarea name="content" rows="10" cols="150"
+                required minlength="1" maxlength="2000"></textarea>
+        <p>
+        <input type="submit" value="create">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        </form>
+        Length of topic must be between 1 and 200 characters.<br>
+        Length of main text must be between 1 and 2000 characters.
+</div>
 
 {% endblock %}

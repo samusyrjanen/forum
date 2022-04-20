@@ -1,27 +1,29 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<a href="/sent_messages">Sent messages</a>
-<p></p>
+<div class="container">
+    <a href="/sent_messages">Sent messages</a>
+    <p></p>
 
-<form action="/messages/result" method="GET">
-    <input type="text" name="query">
-    <input type="submit" value="search">
-    </form>
+    <form action="/messages/result" method="GET">
+        <input type="text" name="query">
+        <input type="submit" value="search">
+        </form>
 
-{% if query %}
-<a href="/messages">Show all</a>
-<p>Received messages which contain "{{ query }}":</p>
-{% else %}
-<p>Received messages:</p>
-{% endif %}
+    {% if query %}
+    <a href="/messages">Show all</a>
+    <p>Received messages which contain "{{ query }}":</p>
+    {% else %}
+    <p>Received messages:</p>
+    {% endif %}
 
-{% for message in messages %}
-<hr>
-{{ message.content }} <br>
-<i>From: </i> {{ message.username }} | <i>Date: </i>{{ message.sent_at.strftime("%Y-%m-%d %H:%M") }} <br>
-<a href="/message/{{ message.username }}">Message back</a>
-{% endfor %}
-<hr>
+    {% for message in messages %}
+    <hr>
+    {{ message.content }} <br>
+    <i>From: </i> {{ message.username }} | <i>Date: </i>{{ message.sent_at.strftime("%Y-%m-%d %H:%M") }} <br>
+    <a href="/message/{{ message.username }}">Message back</a>
+    {% endfor %}
+    <hr>
+</div>
 
 {% endblock %}
