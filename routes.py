@@ -195,7 +195,7 @@ def send_comment_unlike():
     return render_template('/error.html', message="Couldn't send unlike, make sure you're logged in")
 
 @app.route('/message/<username>')
-def message(username):############################################
+def message(username):
     admin_value = users.admin_value()
     return render_template('send_message.html', username=username, admin_value=admin_value)
 
