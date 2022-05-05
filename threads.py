@@ -1,15 +1,45 @@
 from db import db
 import users
 
-def get_thread_list():
-    sql = 'select T.id, T.topic, T.content, U.username, T.sent_at from threads T, ' \
-        'users U where T.user_id=U.id order by T.id'
+def get_thread_list_new():
+    sql = 'select T.id, T.topic, T.content, U.username, T.sent_at, count(L.id) as lamount ' \
+        'from threads T left join users U on T.user_id=U.id left join likes L on L.thread_id=T.id ' \
+        'group by T.id, U.username order by T.id desc'
+    result = db.session.execute(sql)
+    return result.fetchall()
+
+def get_thread_list_old():
+    sql = 'select T.id, T.topic, T.content, U.username, T.sent_at, count(L.id) as lamount ' \
+        'from threads T left join users U on T.user_id=U.id left join likes L on L.thread_id=T.id ' \
+        'group by T.id, U.username order by T.id'
+    result = db.session.execute(sql)
+    return result.fetchall()
+
+def get_thread_list_liked():
+    sql = 'select T.id, T.topic, T.content, U.username, T.sent_at, count(L.id) as lamount ' \
+        'from threads T left join users U on T.user_id=U.id left join likes L on L.thread_id=T.id ' \
+        'group by T.id, U.username order by lamount desc'
     result = db.session.execute(sql)
     return result.fetchall()
 
 def search_thread(topic):
-    sql = 'select T.id, T.topic, T.content, U.username, T.sent_at from threads T, ' \
-        'users U where T.user_id=U.id and (T.topic like :topic or U.username like :topic) order by T.id'
+    sql = 'select T.id, T.topic, T.content, U.username, T.sent_at, count(L.id) as lamount ' \
+        'from threads T left join users U on T.user_id=U.id left join likes L on L.thread_id=T.id ' \
+        'where (T.topic like :topic or U.username like :topic) group by T.id, U.username order by T.id desc'
+    result = db.session.execute(sql, {'topic':'%'+topic+'%'})
+    return result.fetchall()
+
+def search_thread_old(topic):
+    sql = 'select T.id, T.topic, T.content, U.username, T.sent_at, count(L.id) as lamount ' \
+        'from threads T left join users U on T.user_id=U.id left join likes L on L.thread_id=T.id ' \
+        'where (T.topic like :topic or U.username like :topic) group by T.id, U.username order by T.id'
+    result = db.session.execute(sql, {'topic':'%'+topic+'%'})
+    return result.fetchall()
+
+def search_thread_liked(topic):
+    sql = 'select T.id, T.topic, T.content, U.username, T.sent_at, count(L.id) as lamount ' \
+        'from threads T left join users U on T.user_id=U.id left join likes L on L.thread_id=T.id ' \
+        'where (T.topic like :topic or U.username like :topic) group by T.id, U.username order by lamount desc'
     result = db.session.execute(sql, {'topic':'%'+topic+'%'})
     return result.fetchall()
 

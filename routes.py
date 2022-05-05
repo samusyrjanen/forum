@@ -5,7 +5,21 @@ import threads, comments, users, likes, messages
 @app.route('/')
 def index():
     username = users.username()
-    list = threads.get_thread_list()
+    list = threads.get_thread_list_new()
+    admin_value = users.admin_value()
+    return render_template('index.html', username=username, threads=list, admin_value=admin_value)
+
+@app.route('/old')
+def old():
+    username = users.username()
+    list = threads.get_thread_list_old()
+    admin_value = users.admin_value()
+    return render_template('index.html', username=username, threads=list, admin_value=admin_value)
+
+@app.route('/liked')
+def liked():
+    username = users.username()
+    list = threads.get_thread_list_liked()
     admin_value = users.admin_value()
     return render_template('index.html', username=username, threads=list, admin_value=admin_value)
 
@@ -16,6 +30,26 @@ def result():
         return redirect('/')
     username = users.username()
     list = threads.search_thread(query)
+    admin_value = users.admin_value()
+    return render_template('index.html', username=username, threads=list, query=query, admin_value=admin_value)
+
+@app.route('/result/old')
+def result_old():
+    query = request.args['query']
+    if not query:
+        return redirect('/')
+    username = users.username()
+    list = threads.search_thread_old(query)
+    admin_value = users.admin_value()
+    return render_template('index.html', username=username, threads=list, query=query, admin_value=admin_value)
+
+@app.route('/result/liked')
+def result_liked():
+    query = request.args['query']
+    if not query:
+        return redirect('/')
+    username = users.username()
+    list = threads.search_thread_liked(query)
     admin_value = users.admin_value()
     return render_template('index.html', username=username, threads=list, query=query, admin_value=admin_value)
 
@@ -73,7 +107,7 @@ def login():
         if users.login(username, password):
             return redirect('/')
         else:
-            return render_template('/login.html', message="Couldn't login, check username and password")
+            return render_template('/login.html', message="Couldn't login, wrong username or password")
 
 @app.route('/logout')
 def logout():
@@ -88,10 +122,13 @@ def register():
         username = request.form['username']
         password1 = request.form['password1']
         password2 = request.form['password2']
+        message = ''
         if username in [i[0] for i in users.taken_usernames()]:
-            return render_template('register.html', message='That username is already taken')
+            message += 'That username is already taken. '
         if password1 != password2:
-            return render_template('register.html', message='Passwords were different')
+            message += 'Passwords were different.'
+        if message:
+            return render_template('register.html', message=message)
         if users.register(username, password1):
             return redirect('/')
         else:

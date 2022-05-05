@@ -18,6 +18,25 @@
     {% if query %}
     <a href="/">Show all</a>
     <p>Threads which contain "{{ query }}":</p>
+    <p>Sort by: </p>
+    <form action="/result" method="GET">
+        <input type="hidden" name="query" value="{{ query }}">
+        <input type="submit" value="new">
+    </form>
+    <form action="/result/old" method="GET">
+        <input type="hidden" name="query" value="{{ query }}">
+        <input type="submit" value="old">
+    </form>
+    <form action="/result/liked" method="GET">
+        <input type="hidden" name="query" value="{{ query }}">
+        <input type="submit" value="most liked">
+    </form>
+    {% else %}
+    <p>
+    <p>Sort by: </p>
+    <a href="/">new</a> |
+    <a href="/old">old</a> |
+    <a href="/liked">most liked</a>
     {% endif %}
 
     <br>
@@ -25,7 +44,7 @@
     {% for thread in threads %}
     <i>Topic: </i>{{ thread.topic }}
     <br>
-    <i>User: </i>{{ thread.username }} | <i>Date: </i>{{ thread.sent_at.strftime("%Y-%m-%d %H:%M") }}
+    <i>User: </i>{{ thread.username }} | <i>Date: </i>{{ thread.sent_at.strftime("%Y-%m-%d %H:%M") }} | <i>Likes: </i> {{ thread.lamount }}
     <br>
     <a href="/thread/{{ thread.id }}">Open</a>
     {% if username == thread.username or admin_value == 1 %}
