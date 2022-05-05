@@ -66,6 +66,32 @@ def thread(id):
         user_id=user_id, thread_likes=thread_like_list, username=username,
         admin_value = admin_value)
 
+@app.route('/thread/<int:id>/old')
+def thread_old(id):
+    thread = threads.get_specific_thread(id)
+    comment_list = comments.thread_comments_old(id)
+    thread_like_list = [i[0] for i in likes.thread_likes(id)]
+    user_id = users.user_id()
+    username = users.username()
+    admin_value = users.admin_value()
+    return render_template('thread.html', thread=thread,
+        comment_list=comment_list, count_thread_likes=len(thread_like_list),
+        user_id=user_id, thread_likes=thread_like_list, username=username,
+        admin_value = admin_value)
+    
+@app.route('/thread/<int:id>/liked')
+def thread_liked(id):
+    thread = threads.get_specific_thread(id)
+    comment_list = comments.thread_comments_liked(id)
+    thread_like_list = [i[0] for i in likes.thread_likes(id)]
+    user_id = users.user_id()
+    username = users.username()
+    admin_value = users.admin_value()
+    return render_template('thread.html', thread=thread,
+        comment_list=comment_list, count_thread_likes=len(thread_like_list),
+        user_id=user_id, thread_likes=thread_like_list, username=username,
+        admin_value = admin_value)
+
 @app.route('/create_thread')
 def create_thread():
     username = users.username()

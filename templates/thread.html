@@ -42,11 +42,21 @@
     {% endif %}
 
     {% if username %}
-    <a href="/comment/{{ thread.id }}">Comment</a>
+
+    <p>
+    <a href="/comment/{{ thread.id }}">Write a comment</a>
     {% endif %}
-    <p></p>
+
+    <p>
+    <p>
+    <p>Sort by: </p>
+    <a href="/thread/{{ thread.id }}">new</a> |
+    <a href="/thread/{{ thread.id }}/old">old</a> |
+    <a href="/thread/{{ thread.id }}/liked">most liked</a>
+    <p><p><p>
+
+    <hr>
     <p>comments:</p>
-    <p></p>
 
     {% if not comment_list %}
     <p>None</p>
@@ -86,7 +96,8 @@
     <a href="/message/{{ comment.username }}">Send a direct message</a>
     {% endif %}
     {% endif %}
-    <p></p>
+    <p>
+    <hr>
     {% endfor %}
 
 </div>

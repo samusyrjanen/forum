@@ -4,7 +4,21 @@ import users
 def thread_comments(id):
     sql = 'select C.id, C.content, U.username, C.sent_at, count(L.comment_id), C.user_id ' \
         'from comments C left join users U on C.user_id=U.id left join likes L ' \
+        'on C.id=L.comment_id where C.thread_id=:id group by C.id, U.username order by C.id desc'
+    result = db.session.execute(sql, {'id':id})
+    return result.fetchall()
+
+def thread_comments_old(id):
+    sql = 'select C.id, C.content, U.username, C.sent_at, count(L.comment_id), C.user_id ' \
+        'from comments C left join users U on C.user_id=U.id left join likes L ' \
         'on C.id=L.comment_id where C.thread_id=:id group by C.id, U.username order by C.id'
+    result = db.session.execute(sql, {'id':id})
+    return result.fetchall()
+
+def thread_comments_liked(id):
+    sql = 'select C.id, C.content, U.username, C.sent_at, count(L.comment_id) as lamount, C.user_id ' \
+        'from comments C left join users U on C.user_id=U.id left join likes L ' \
+        'on C.id=L.comment_id where C.thread_id=:id group by C.id, U.username order by lamount desc'
     result = db.session.execute(sql, {'id':id})
     return result.fetchall()
 
