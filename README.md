@@ -22,6 +22,6 @@ Users can create accounts and post threads into the forum. Each thread has a top
 - (done) Users can send private messages to each other.  
 - (done) Users can sort threads and comments by date or likes.  
 
-### testing
+### testing (not available anymore)
 Testing can be done in heroku:  
 [https://tsoha-forum-visitors.herokuapp.com](https://tsoha-forum-visitors.herokuapp.com/)
